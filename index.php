@@ -45,6 +45,9 @@ $isParkingChecked = isset($_GET['parking']) ? true : false;
 // Check if checkbox all Hotels is selected
 $isAllHotelsChecked = isset($_GET['all']) ? true : false;
 
+// Check vote input field
+$vote = isset($_GET['vote']) ? $_GET['vote'] : '';
+
 // Array of Hotels with parking services
 $parkingAvailableHotels = array_filter(
   $hotels,
@@ -92,6 +95,10 @@ $parkingNotAvailableHotels = array_filter(
       <input type="checkbox" class="form-check-input" id="all" name="all" <?php echo $isAllHotelsChecked ? 'checked' : '' ?>>
       <label class="form-check-label" for="all">Show All Hotels</label>
     </div>
+    <div class="mb-3">
+      <label for="vote" class="form-label">Vote</label>
+      <input type="number" class="form-control" id="vote" name="vote">
+    </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
   <!-- Bootstrap Table -->
@@ -108,6 +115,17 @@ $parkingNotAvailableHotels = array_filter(
     <tbody>
       <?php
       if ($isAllHotelsChecked) {
+        if ($vote != '') {
+          $hotels = array_filter(
+            $hotels,
+            function ($hotel) {
+              $vote = isset($_GET['vote']) ? $_GET['vote'] : '';
+              if ($hotel['vote'] >= $vote) {
+                return $hotel;
+              }
+            }
+          );
+        }
         foreach ($hotels as $hotel) {
           ?>
           <tr>
@@ -153,6 +171,17 @@ $parkingNotAvailableHotels = array_filter(
         }
       } else {
         if (!$isParkingChecked) {
+          if ($vote != '') {
+            $parkingNotAvailableHotels = array_filter(
+              $parkingNotAvailableHotels,
+              function ($hotel) {
+                $vote = isset($_GET['vote']) ? $_GET['vote'] : '';
+                if ($hotel['vote'] >= $vote) {
+                  return $hotel;
+                }
+              }
+            );
+          }
           ?>
           <?php
           foreach ($parkingNotAvailableHotels as $hotel) {
@@ -203,6 +232,17 @@ $parkingNotAvailableHotels = array_filter(
         } else {
           ?>
           <?php
+          if ($vote != '') {
+            $parkingAvailableHotels = array_filter(
+              $parkingAvailableHotels,
+              function ($hotel) {
+                $vote = isset($_GET['vote']) ? $_GET['vote'] : '';
+                if ($hotel['vote'] >= $vote) {
+                  return $hotel;
+                }
+              }
+            );
+          }
           foreach ($parkingAvailableHotels as $hotel) {
             ?>
             <tr>
