@@ -56,16 +56,66 @@ $hotels = [
 
 <body>
   <h1>Hotels</h1>
-  <span>
-    <?php
-    foreach ($hotels as $hotel) {
-      foreach ($hotel as $key => $element) {
-        echo "{$key}: {$element} <br>";
+  <!-- Bootstrap Table -->
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Parking</th>
+        <th scope="col">Vote</th>
+        <th scope="col">Distance to center</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php
+      foreach ($hotels as $hotel) {
+        ?>
+        <tr>
+          <?php
+          foreach ($hotel as $key => $element) {
+            if ($key == 'name') {
+              ?>
+              <th scope="row">
+                <?php echo $element; ?>
+              </th>
+              <?php
+            } elseif ($key == 'parking') {
+              ?>
+              <td>
+                <?php
+                if ($element) {
+                  echo "Yes";
+                } else {
+                  echo "No";
+                }
+                ?>
+              </td>
+              <?php
+            } elseif ($key == 'distance_to_center') {
+              ?>
+              <td>
+                <?php echo $element . " km" ?>
+              </td>
+              <?php
+            } else {
+              ?>
+              <td>
+                <?php echo $element; ?>
+              </td>
+              <?php
+            }
+            ?>
+            <?php
+          }
+          ?>
+        </tr>
+        <?php
       }
-      echo "<hr>";
-    }
-    ?>
-  </span>
+      ?>
+    </tbody>
+  </table>
+
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
