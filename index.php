@@ -42,6 +42,27 @@ $hotels = [
 // Check if checkbox is selected
 $isParkingChecked = isset($_GET['parking']) ? true : false;
 
+// Array of Hotels with parking services
+$parkingAvailableHotels = array_filter(
+  $hotels,
+  function ($hotel) {
+    if ($hotel['parking']) {
+      return $hotel;
+    }
+  }
+);
+
+// Array of Hotels without parking services
+$parkingNotAvailableHotels = array_filter(
+  $hotels,
+  function ($hotel) {
+    if (!$hotel['parking']) {
+      return $hotel;
+    }
+  }
+);
+
+
 ?>
 <!DOCTYPE html>
 <html lang="it">
@@ -61,7 +82,7 @@ $isParkingChecked = isset($_GET['parking']) ? true : false;
   <!-- Form -->
   <form action="index.php" method='GET'>
     <div class="mb-3 form-check">
-      <input type="checkbox" class="form-check-input" id="parking" name="parking">
+      <input type="checkbox" class="form-check-input" id="parking" name="parking" <?php echo $isParkingChecked ? 'checked' : '' ?>>
       <label class="form-check-label" for="parking">Parking</label>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
@@ -79,47 +100,101 @@ $isParkingChecked = isset($_GET['parking']) ? true : false;
     </thead>
     <tbody>
       <?php
-      foreach ($hotels as $hotel) {
+      if (!$isParkingChecked) {
         ?>
-        <tr>
-          <?php
-          foreach ($hotel as $key => $element) {
-            if ($key == 'name') {
-              ?>
-              <th scope="row">
-                <?php echo $element; ?>
-              </th>
-              <?php
-            } elseif ($key == 'parking') {
-              ?>
-              <td>
-                <?php
-                if ($element) {
-                  echo "Yes";
-                } else {
-                  echo "No";
-                }
+        <?php
+        foreach ($parkingNotAvailableHotels as $hotel) {
+          ?>
+          <tr>
+            <?php
+            foreach ($hotel as $key => $element) {
+              if ($key == 'name') {
                 ?>
-              </td>
-              <?php
-            } elseif ($key == 'distance_to_center') {
+                <th scope="row">
+                  <?php echo $element; ?>
+                </th>
+                <?php
+              } elseif ($key == 'parking') {
+                ?>
+                <td>
+                  <?php
+                  if ($element) {
+                    echo "Yes";
+                  } else {
+                    echo "No";
+                  }
+                  ?>
+                </td>
+                <?php
+              } elseif ($key == 'distance_to_center') {
+                ?>
+                <td>
+                  <?php echo $element . " km" ?>
+                </td>
+                <?php
+              } else {
+                ?>
+                <td>
+                  <?php echo $element; ?>
+                </td>
+                <?php
+              }
               ?>
-              <td>
-                <?php echo $element . " km" ?>
-              </td>
-              <?php
-            } else {
-              ?>
-              <td>
-                <?php echo $element; ?>
-              </td>
               <?php
             }
             ?>
-            <?php
-          }
+          </tr>
+          <?php
+        }
+        ?>
+        <?php
+      } else {
+        ?>
+        <?php
+        foreach ($parkingAvailableHotels as $hotel) {
           ?>
-        </tr>
+          <tr>
+            <?php
+            foreach ($hotel as $key => $element) {
+              if ($key == 'name') {
+                ?>
+                <th scope="row">
+                  <?php echo $element; ?>
+                </th>
+                <?php
+              } elseif ($key == 'parking') {
+                ?>
+                <td>
+                  <?php
+                  if ($element) {
+                    echo "Yes";
+                  } else {
+                    echo "No";
+                  }
+                  ?>
+                </td>
+                <?php
+              } elseif ($key == 'distance_to_center') {
+                ?>
+                <td>
+                  <?php echo $element . " km" ?>
+                </td>
+                <?php
+              } else {
+                ?>
+                <td>
+                  <?php echo $element; ?>
+                </td>
+                <?php
+              }
+              ?>
+              <?php
+            }
+            ?>
+          </tr>
+          <?php
+        }
+        ?>
         <?php
       }
       ?>
