@@ -53,6 +53,16 @@ $hotels = [
 
 <body>
   <h1>Hotels</h1>
+  <span>
+    <?php
+    foreach ($hotels as $hotel) {
+      foreach ($hotel as $key => $element) {
+        echo "{$key}: {$element} <br>";
+      }
+      echo "<hr>";
+    }
+    ?>
+  </span>
 </body>
 
 </html>
