@@ -84,9 +84,9 @@ $parkingNotAvailableHotels = array_filter(
 </head>
 
 <body>
-  <h1>Hotels</h1>
+  <h1 class="m-4">Hotels</h1>
   <!-- Form -->
-  <form action="index.php" method='GET'>
+  <form action="index.php" method='GET' class="m-4">
     <div class="mb-3 form-check">
       <input type="checkbox" class="form-check-input" id="parking" name="parking" <?php echo $isParkingChecked ? 'checked' : '' ?>>
       <label class="form-check-label" for="parking">Parking</label>
@@ -95,14 +95,14 @@ $parkingNotAvailableHotels = array_filter(
       <input type="checkbox" class="form-check-input" id="all" name="all" <?php echo $isAllHotelsChecked ? 'checked' : '' ?>>
       <label class="form-check-label" for="all">Show All Hotels</label>
     </div>
-    <div class="mb-3">
+    <div class="mb-3 w-25">
       <label for="vote" class="form-label">Vote</label>
       <input type="number" class="form-control" id="vote" name="vote">
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
   <!-- Bootstrap Table -->
-  <table class="table table-hover">
+  <table class="table table-hover mx-auto">
     <thead>
       <tr>
         <th scope="col">Name</th>
