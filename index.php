@@ -39,6 +39,8 @@ $hotels = [
   ],
 
 ];
+// Check if checkbox is selected
+$isParkingChecked = isset($_GET['parking']) ? true : false;
 
 ?>
 <!DOCTYPE html>
@@ -56,6 +58,14 @@ $hotels = [
 
 <body>
   <h1>Hotels</h1>
+  <!-- Form -->
+  <form action="index.php" method='GET'>
+    <div class="mb-3 form-check">
+      <input type="checkbox" class="form-check-input" id="parking" name="parking">
+      <label class="form-check-label" for="parking">Parking</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
   <!-- Bootstrap Table -->
   <table class="table table-hover">
     <thead>
